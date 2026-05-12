@@ -17,19 +17,19 @@ public class SplashScreen extends JFrame {
         setUndecorated(true);
         setLayout(null);
 
-        // 🎨 Background Panel
+        //  Background Panel
         JPanel panel = new JPanel();
         panel.setBackground(new Color(30, 30, 30));
         panel.setBounds(0, 0, 500, 300);
         panel.setLayout(null);
 
-        // 🏷️ Title
+        //  Title
         JLabel title = new JLabel("Car Rental System");
         title.setForeground(Color.WHITE);
         title.setFont(new Font("Arial", Font.BOLD, 22));
         title.setBounds(140, 80, 300, 30);
 
-        // 🔄 Progress Bar
+        //  Progress Bar
         progressBar = new JProgressBar();
         progressBar.setBounds(100, 200, 300, 20);
         progressBar.setStringPainted(true);
@@ -44,7 +44,7 @@ public class SplashScreen extends JFrame {
         loadSystem();
     }
 
-    // ⏳ Simulate Loading
+    //  Simulate Loading
     private void loadSystem() {
 
         new Thread(() -> {

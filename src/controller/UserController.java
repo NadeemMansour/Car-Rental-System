@@ -1,132 +1,178 @@
 package controller;
 
 import model.User;
-import service.UserService;
+import util.DBConnection;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserController {
 
-    private final UserService userService;
+    // LOGIN
 
-    // 🔥 Dependency Injection (أفضل من إنشاء object مباشرة)
-    public UserController() {
-        this.userService = new UserService();
+    public User login(String username, String password) {
+
+        User user = null;
+
+        try {
+
+            Connection con =
+                    DBConnection.getConnection();
+
+            String sql =
+                    "SELECT * FROM User WHERE Username=? AND Password=?";
+
+            PreparedStatement ps =
+                    con.prepareStatement(sql);
+
+            ps.setString(1, username);
+
+            ps.setString(2, password);
+
+            ResultSet rs =
+                    ps.executeQuery();
+
+            if (rs.next()) {
+
+                user = new User();
+
+                user.setUserId(
+                        rs.getInt("User_ID")
+                );
+
+                user.setUsername(
+                        rs.getString("Username")
+                );
+
+                user.setPassword(
+                        rs.getString("Password")
+                );
+
+                user.setFullName(
+                        rs.getString("Full_Name")
+                );
+
+                user.setRole(
+                        rs.getString("Role")
+                );
+
+                user.setStatus(
+                        rs.getString("Status")
+                );
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
-    // =========================
-    // 🔐 AUTHENTICATION
-    // =========================
+    // REGISTER
 
-    public boolean login(String username, String password) {
+    public boolean register(User user) {
 
-        if (isInvalidCredentials(username, password)) {
+        try {
+
+            Connection con =
+                    DBConnection.getConnection();
+
+            String sql =
+                    "INSERT INTO User "
+                            + "(Username, Password, Full_Name, Role, Status) "
+                            + "VALUES (?, ?, ?, ?, ?)";
+
+            PreparedStatement ps =
+                    con.prepareStatement(sql);
+
+            ps.setString(1,
+                    user.getUsername());
+
+            ps.setString(2,
+                    user.getPassword());
+
+            ps.setString(3,
+                    user.getFullName());
+
+            ps.setString(4,
+                    user.getRole());
+
+            ps.setString(5,
+                    user.getStatus());
+
+            int rows =
+                    ps.executeUpdate();
+
+            return rows > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
             return false;
         }
-
-        return userService.validateLogin(username.trim(), password.trim());
     }
+    // GET ALL USERS
 
-    private boolean isInvalidCredentials(String username, String password) {
-        return username == null || password == null
-                || username.isBlank()
-                || password.isBlank();
-    }
+public List<User> getAllUsers() {
 
-    // =========================
-    // 👤 USER MANAGEMENT
-    // =========================
+    List<User> users = new ArrayList<>();
 
-    public String addUser(User user) {
+    try {
 
-        if (user == null || !isValidUser(user)) {
-            return "Invalid User Data";
+        Connection con =
+                DBConnection.getConnection();
+
+        String sql =
+                "SELECT * FROM User";
+
+        PreparedStatement ps =
+                con.prepareStatement(sql);
+
+        ResultSet rs =
+                ps.executeQuery();
+
+        while (rs.next()) {
+
+            User user = new User();
+
+            user.setUserId(
+                    rs.getInt("User_ID")
+            );
+
+            user.setUsername(
+                    rs.getString("Username")
+            );
+
+            user.setPassword(
+                    rs.getString("Password")
+            );
+
+            user.setFullName(
+                    rs.getString("Full_Name")
+            );
+
+            user.setRole(
+                    rs.getString("Role")
+            );
+
+            user.setStatus(
+                    rs.getString("Status")
+            );
+
+            users.add(user);
         }
 
-        userService.addUser(user);
-        return "User Added Successfully";
+    } catch (Exception e) {
+
+        e.printStackTrace();
     }
 
-    public String updateUser(User user) {
-
-        if (user == null || user.getUserId() <= 0) {
-            return "Invalid User Data";
-        }
-
-        userService.updateUser(user);
-        return "User Updated Successfully";
-    }
-
-    public String deleteUser(int userId) {
-
-        if (userId <= 0) {
-            return "Invalid User ID";
-        }
-
-        userService.deleteUser(userId);
-        return "User Deleted Successfully";
-    }
-
-    // =========================
-    // 🔍 QUERIES
-    // =========================
-
-    public User getUserById(int userId) {
-        return userService.getUserById(userId);
-    }
-
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-    public User getByUsername(String username) {
-
-        if (username == null || username.isBlank()) {
-            return null;
-        }
-
-        return userService.getByUsername(username.trim());
-    }
-
-    // =========================
-    // ⚙️ STATUS CONTROL
-    // =========================
-
-    public String changeStatus(int userId, String status) {
-
-        if (userId <= 0 || status == null || status.isBlank()) {
-            return "Invalid Data";
-        }
-
-        User user = userService.getUserById(userId);
-
-        if (user == null) {
-            return "User Not Found";
-        }
-
-        user.setStatus(status);
-        userService.updateUser(user);
-
-        return "User Status Updated";
-    }
-
-    // =========================
-    // 🧠 VALIDATION (clean helper)
-    // =========================
-
-    private boolean isValidUser(User user) {
-        return user.getUsername() != null && !user.getUsername().isBlank()
-                && user.getPassword() != null && !user.getPassword().isBlank();
-    }
-    public String register(User user) {
-
-    if (user == null
-            || user.getUsername() == null
-            || user.getPassword() == null) {
-        return "Invalid User Data";
-    }
-
-    return addUser(user);
+    return users;
 }
 }
 
@@ -139,83 +185,69 @@ public class UserController {
 
 // public class UserController {
 
-//     private UserService userService = new UserService();
+//     private final UserService userService = new UserService();
 
-//     // ➕ إضافة مستخدم جديد
+//     // Login يرجع User بدل boolean (مهم جدًا)
+//     public User login(String username, String password) {
+
+//         if (username == null || password == null
+//                 || username.isBlank() || password.isBlank()) {
+//             return null;
+//         }
+
+//         return userService.login(username.trim(), password.trim());
+//     }
+
+//     // إضافة مستخدم
 //     public String addUser(User user) {
 
-//         if (user == null || user.getUsername() == null || user.getPassword() == null) {
-//             return "Invalid User Data";
-//         }
+//         if (user == null)
+//             return "Invalid User";
 
 //         userService.addUser(user);
 //         return "User Added Successfully";
 //     }
 
-//     // ✏️ تحديث مستخدم
+//     // تحديث
 //     public String updateUser(User user) {
 
-//         if (user == null || user.getUserId() <= 0) {
-//             return "Invalid User Data";
-//         }
+//         if (user == null || user.getUserId() <= 0)
+//             return "Invalid User";
 
 //         userService.updateUser(user);
 //         return "User Updated Successfully";
 //     }
 
-//     // ❌ حذف مستخدم
-//     public String deleteUser(int userId) {
+//     // حذف
+//     public String deleteUser(int id) {
 
-//         if (userId <= 0) {
-//             return "Invalid User ID";
-//         }
+//         if (id <= 0)
+//             return "Invalid ID";
 
-//         userService.deleteUser(userId);
-//         return "User Deleted Successfully";
+//         userService.deleteUser(id);
+//         return "User Deleted";
 //     }
 
-//     // 🔍 جلب مستخدم حسب ID
-//     public User getUserById(int userId) {
-//         return userService.getUserById(userId);
+//     public User getById(int id) {
+//         return userService.getUserById(id);
 //     }
 
-//     // 📋 جلب جميع المستخدمين
-//     public List<User> getAllUsers() {
+//     public List<User> getAll() {
 //         return userService.getAllUsers();
 //     }
 
-//     // 🔎 البحث باسم المستخدم
-//     public User getByUsername(String username) {
+//     public boolean register(User user) {
 
-//         if (username == null || username.isEmpty()) {
-//             return null;
-//         }
-
-//         return userService.getByUsername(username);
-//     }
-
-//     // 🔐 التحقق من تسجيل الدخول
-//     public boolean validateLogin(String username, String password) {
-
-//         if (username == null || password == null) {
+//         if (user == null ||
+//                 user.getUsername() == null ||
+//                 user.getPassword() == null) {
 //             return false;
 //         }
 
-//         return userService.validateLogin(username, password);
+//         userService.addUser(user);
+//         return true;
 //     }
-
-//     //  تغيير حالة المستخدم (Active / Inactive)
-//     public String changeStatus(int userId, String status) {
-
-//         User user = userService.getUserById(userId);
-
-//         if (user == null) {
-//             return "User Not Found";
-//         }
-
-//         user.setStatus(status);
-//         userService.updateUser(user);
-
-//         return "User Status Updated";
-//     }
+//     public List<User> getAllUsers() {
+//     return userService.getAllUsers();
+// }
 // }

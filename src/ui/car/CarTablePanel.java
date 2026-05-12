@@ -26,7 +26,7 @@ public class CarTablePanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    // 🔄 Load Data
+    //  Load Data
     public void setData(List<Car> cars) {
 
         model.setRowCount(0);

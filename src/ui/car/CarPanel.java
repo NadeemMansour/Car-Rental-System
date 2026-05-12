@@ -17,7 +17,7 @@ public class CarPanel extends JPanel {
 
         setLayout(new BorderLayout());
 
-        // 🔝 Top Panel (Buttons)
+        // Top Panel (Buttons)
         JPanel top = new JPanel();
 
         JButton addBtn = new JButton("Add Car");
@@ -28,19 +28,19 @@ public class CarPanel extends JPanel {
 
         add(top, BorderLayout.NORTH);
 
-        // 📊 Table
+        //  Table
         tablePanel = new CarTablePanel();
         add(tablePanel, BorderLayout.CENTER);
 
         loadData();
 
-        // ➕ Add Car
+        //  Add Car
         addBtn.addActionListener(e -> {
             new CarFormDialog(null);
             loadData();
         });
 
-        // 🔄 Refresh
+        // Refresh
         refreshBtn.addActionListener(e -> loadData());
     }
 

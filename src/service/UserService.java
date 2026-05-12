@@ -7,17 +7,28 @@ import java.util.List;
 
 public class UserService {
 
-    private UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO = new UserDAO();
 
-    // ➕ إضافة مستخدم
+    //  تسجيل الدخول الحقيقي (يرجع User وليس boolean)
+    public User login(String username, String password) {
+
+        if (username == null || password == null
+                || username.isBlank() || password.isBlank()) {
+            return null;
+        }
+
+        return userDAO.login(username.trim(), password.trim());
+    }
+
+    //  إضافة مستخدم
     public void addUser(User user) {
 
         if (user == null) return;
 
         userDAO.insert(user);
     }
-
-    // ✏️ تحديث مستخدم
+    
+    //  تحديث مستخدم
     public void updateUser(User user) {
 
         if (user == null || user.getUserId() <= 0) return;
@@ -25,7 +36,7 @@ public class UserService {
         userDAO.update(user);
     }
 
-    // ❌ حذف مستخدم
+    //  حذف مستخدم
     public void deleteUser(int userId) {
 
         if (userId <= 0) return;
@@ -33,29 +44,21 @@ public class UserService {
         userDAO.delete(userId);
     }
 
-    // 🔍 جلب مستخدم حسب ID
+    //  جلب حسب ID
     public User getUserById(int id) {
         return userDAO.findById(id);
     }
 
-    // 📋 جميع المستخدمين
+    //  جميع المستخدمين
     public List<User> getAllUsers() {
         return userDAO.findAll();
     }
 
-    // 🔎 البحث باسم المستخدم
+    //  البحث باسم المستخدم
     public User getByUsername(String username) {
 
-        if (username == null || username.isEmpty()) return null;
+        if (username == null || username.isBlank()) return null;
 
-        return userDAO.findByUsername(username);
-    }
-
-    // 🔐 التحقق من تسجيل الدخول
-    public boolean validateLogin(String username, String password) {
-
-        if (username == null || password == null) return false;
-
-        return userDAO.validateLogin(username, password);
+        return userDAO.findByUsername(username.trim());
     }
 }

@@ -7,6 +7,9 @@ import ui.rental.RentalPanel;
 import ui.report.ReportPanel;
 
 import javax.swing.*;
+
+import model.User;
+
 import java.awt.*;
 
 public class MainFrame extends JFrame {
@@ -14,7 +17,7 @@ public class MainFrame extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel contentPanel = new JPanel(cardLayout);
 
-    public MainFrame() {
+    public MainFrame(User user) {
 
         setTitle("Car Rental System - Dashboard");
         setSize(1300, 750);
@@ -29,7 +32,7 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    // 📌 Sidebar
+    //  Sidebar
     private void createSidebar() {
 
         JPanel sidebar = new JPanel();
@@ -46,7 +49,7 @@ public class MainFrame extends JFrame {
         add(sidebar);
     }
 
-    // 🔘 Sidebar Button
+    //  Sidebar Button
     private void addButton(JPanel panel, String text, int y, String view) {
 
         JButton btn = new JButton(text);
@@ -58,7 +61,7 @@ public class MainFrame extends JFrame {
         panel.add(btn);
     }
 
-    // 🧭 Header
+    //  Header
     private void createHeader() {
 
         JPanel header = new JPanel();
@@ -75,7 +78,7 @@ public class MainFrame extends JFrame {
         add(header);
     }
 
-    // 📦 Content Area
+    //  Content Area
     private void createContent() {
 
         contentPanel.setBounds(220, 60, 1080, 690);

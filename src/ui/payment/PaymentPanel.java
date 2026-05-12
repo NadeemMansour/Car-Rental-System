@@ -20,7 +20,7 @@ public class PaymentPanel extends JPanel {
 
         setLayout(new BorderLayout());
 
-        // 🔝 Top Panel
+        //  Top Panel
         JPanel top = new JPanel();
 
         JTextField searchField = new JTextField(15);
@@ -36,20 +36,20 @@ public class PaymentPanel extends JPanel {
 
         add(top, BorderLayout.NORTH);
 
-        // 📊 Table
+        //  Table
         tablePanel = new PaymentTablePanel();
         add(tablePanel, BorderLayout.CENTER);
 
         loadData();
 
-        // ➕ Add Payment
+        //  Add Payment
         addBtn.addActionListener(e -> {
 
             new PaymentFormDialog(null);
             loadData();
         });
 
-        // 🔄 Refresh
+        //  Refresh
         refreshBtn.addActionListener(e -> loadData());
 
         // 🔍 Search (local filter - fast)
@@ -68,9 +68,8 @@ public class PaymentPanel extends JPanel {
         });
     }
 
-    // =========================
-    // 📥 Load Data
-    // =========================
+    //  Load Data
+
     private void loadData() {
 
         Response<List<Payment>> response = controller.getAllPayments();
@@ -92,74 +91,3 @@ public class PaymentPanel extends JPanel {
     }
 }
 
-// package ui.payment;
-
-// import controller.PaymentController;
-// import model.Payment;
-
-// import javax.swing.*;
-// import java.awt.*;
-// import java.util.List;
-
-// public class PaymentPanel extends JPanel {
-
-//     private PaymentController controller = new PaymentController();
-//     private PaymentTablePanel tablePanel;
-
-//     public PaymentPanel() {
-
-//         setLayout(new BorderLayout());
-
-//         // 🔝 Top Control Panel
-//         JPanel top = new JPanel();
-
-//         JTextField searchField = new JTextField(15);
-//         JButton searchBtn = new JButton("Search");
-
-//         JButton addBtn = new JButton("Add Payment");
-//         JButton refreshBtn = new JButton("Refresh");
-
-//         top.add(searchField);
-//         top.add(searchBtn);
-//         top.add(addBtn);
-//         top.add(refreshBtn);
-
-//         add(top, BorderLayout.NORTH);
-
-//         // 📊 Table
-//         tablePanel = new PaymentTablePanel();
-//         add(tablePanel, BorderLayout.CENTER);
-
-//         loadData();
-
-//         // ➕ Add Payment
-//         addBtn.addActionListener(e -> {
-//             new PaymentFormDialog(null);
-//             loadData();
-//         });
-
-//         // 🔄 Refresh
-//         refreshBtn.addActionListener(e -> loadData());
-
-//         // 🔍 Search
-//         searchBtn.addActionListener(e -> {
-
-//             String key = searchField.getText().toLowerCase();
-
-//             List<Payment> filtered = controller.getAllPayments()
-//                     .stream()
-//                     .filter(p ->
-//                             String.valueOf(p.getPaymentId()).contains(key) ||
-//                             String.valueOf(p.getAmount()).contains(key))
-//                     .toList();
-
-//             tablePanel.setData(filtered);
-//         });
-//     }
-
-//     private void loadData() {
-
-//         List<Payment> list = controller.getAllPayments();
-//         tablePanel.setData(list);
-//     }
-// }

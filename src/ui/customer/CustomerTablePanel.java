@@ -32,7 +32,7 @@ public class CustomerTablePanel extends JPanel {
         add(scroll, BorderLayout.CENTER);
     }
 
-    // 🔄 Load Data
+    //  Load Data
     public void setData(List<Customer> customers) {
 
         model.setRowCount(0);

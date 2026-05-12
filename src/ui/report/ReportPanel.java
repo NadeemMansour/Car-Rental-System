@@ -16,7 +16,7 @@ public class ReportPanel extends JPanel {
 
         add(title);
 
-        // 📊 KPI Widgets
+        //  KPI Widgets
         KPIWidgetPanel revenue = new KPIWidgetPanel("Revenue", "12,500$", new Color(220, 240, 255));
         revenue.setBounds(30, 80, 200, 120);
 
@@ -34,7 +34,7 @@ public class ReportPanel extends JPanel {
         add(customers);
         add(profit);
 
-        // 📈 Chart Section
+        //  Chart Section
         ChartPanel chartPanel = new ChartPanel();
         chartPanel.setBounds(30, 230, 860, 300);
 

@@ -16,7 +16,7 @@ public class RentalPanel extends JPanel {
 
         setLayout(new BorderLayout());
 
-        // 🔝 Top Panel
+        //  Top Panel
         JPanel top = new JPanel();
 
         JTextField searchField = new JTextField(15);
@@ -32,22 +32,22 @@ public class RentalPanel extends JPanel {
 
         add(top, BorderLayout.NORTH);
 
-        // 📊 Table
+        //  Table
         tablePanel = new RentalTablePanel();
         add(tablePanel, BorderLayout.CENTER);
 
         loadData();
 
-        // ➕ New Rental
+        //  New Rental
         addBtn.addActionListener(e -> {
             new RentalFormDialog(null);
             loadData();
         });
 
-        // 🔄 Refresh
+        //  Refresh
         refreshBtn.addActionListener(e -> loadData());
 
-        // 🔍 Search
+        //  Search
         searchBtn.addActionListener(e -> {
 
             String key = searchField.getText().toLowerCase();

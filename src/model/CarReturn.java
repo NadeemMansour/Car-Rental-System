@@ -12,6 +12,16 @@ public class CarReturn {
 
     public CarReturn() {}
 
+
+    public CarReturn(int rentalId, Date returnDate, String condition, int employeeId) {
+        this.rentalId = rentalId;
+        this.returnDate = returnDate;
+        this.condition = condition;
+        this.employeeId = employeeId;
+    }
+
+    
+
     public int getReturnId() {
         return returnId;
     }
