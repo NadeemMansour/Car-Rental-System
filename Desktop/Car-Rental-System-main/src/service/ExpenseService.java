@@ -9,7 +9,6 @@ public class ExpenseService {
 
     private final ExpenseDAO expenseDAO = new ExpenseDAO();
 
-    // =========================
     // ADD EXPENSE
     // =========================
     public void addExpense(Expense expense) {
@@ -17,11 +16,9 @@ public class ExpenseService {
         if (expense == null) {
             throw new IllegalArgumentException("Expense cannot be null");
         }
-
         expenseDAO.insert(expense);
     }
 
-    // =========================
     // UPDATE EXPENSE
     // =========================
     public void updateExpense(Expense expense) {
@@ -33,7 +30,6 @@ public class ExpenseService {
         expenseDAO.update(expense);
     }
 
-    // =========================
     // DELETE EXPENSE
     // =========================
     public void deleteExpense(int expenseId) {
@@ -45,7 +41,6 @@ public class ExpenseService {
         expenseDAO.delete(expenseId);
     }
 
-    // =========================
     // GET EXPENSE BY ID
     // =========================
     public Expense getExpenseById(int expenseId) {
@@ -57,7 +52,6 @@ public class ExpenseService {
         return expenseDAO.findById(expenseId);
     }
 
-    // =========================
     // GET ALL EXPENSES
     // =========================
     public List<Expense> getAllExpenses() {
@@ -65,7 +59,6 @@ public class ExpenseService {
         return expenseDAO.findAll();
     }
 
-    // =========================
     // GET EXPENSES BY BRANCH
     // =========================
     public List<Expense> getExpensesByBranch(int branchId) {
@@ -83,7 +76,6 @@ public class ExpenseService {
         return expenseDAO.getTotalExpenses();
     }
 
-    // =========================
     // CHECK EXPENSE EXISTS
     // =========================
     public boolean expenseExists(int expenseId) {

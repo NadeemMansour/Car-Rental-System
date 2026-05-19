@@ -10,7 +10,6 @@ public class CarService {
 
     private final CarDAO carDAO = new CarDAO();
 
-    // =========================
     // ADD CAR
     // =========================
     public void addCar(Car car) {
@@ -22,7 +21,6 @@ public class CarService {
         carDAO.insert(car);
     }
 
-    // =========================
     // UPDATE CAR
     // =========================
     public void updateCar(Car car) {
@@ -34,7 +32,6 @@ public class CarService {
         carDAO.update(car);
     }
 
-    // =========================
     // DELETE CAR
     // =========================
     public void deleteCar(int carId) {
@@ -46,7 +43,6 @@ public class CarService {
         carDAO.delete(carId);
     }
 
-    // =========================
     // GET CAR BY ID
     // =========================
     public Car getCarById(int carId) {
@@ -58,7 +54,6 @@ public class CarService {
         return carDAO.findById(carId);
     }
 
-    // =========================
     // GET ALL CARS
     // =========================
     public List<Car> getAllCars() {
@@ -66,7 +61,6 @@ public class CarService {
         return carDAO.findAll();
     }
 
-    // =========================
     // GET AVAILABLE CARS
     // =========================
     public List<Car> getAvailableCars() {
@@ -74,7 +68,6 @@ public class CarService {
         return carDAO.findByStatus(Constants.AVAILABLE);
     }
 
-    // =========================
     // SEARCH BY BRAND
     // =========================
     public List<Car> searchByBrand(String brand) {
@@ -82,7 +75,6 @@ public class CarService {
         return carDAO.findByBrand(brand);
     }
 
-    // =========================
     // SEARCH BY MODEL
     // =========================
     public List<Car> searchByModel(String model) {
@@ -90,7 +82,6 @@ public class CarService {
         return carDAO.findByModel(model);
     }
 
-    // =========================
     // MARK AS RENTED
     // =========================
     public void markAsRented(int carId) {
@@ -105,7 +96,6 @@ public class CarService {
         }
     }
 
-    // =========================
     // MARK AS AVAILABLE
     // =========================
     public void markAsAvailable(int carId) {
@@ -120,7 +110,6 @@ public class CarService {
         }
     }
 
-    // =========================
     // SEND TO MAINTENANCE
     // =========================
     public void sendToMaintenance(int carId) {
@@ -135,7 +124,6 @@ public class CarService {
         }
     }
 
-    // =========================
     // CHECK CAR AVAILABLE
     // =========================
     public boolean isCarAvailable(int carId) {
